@@ -1,0 +1,415 @@
+%-------------------------------------------------------------------------------
+% LaTeX Beamer theme "femto" from the femto-st evaluation model (2011) JM Nicod and PC Heam (LIFC)
+% 
+% author: Christophe Varnier et passage au ".sty" par G. Laurent
+%         Joel Abadie (12/06/2012) rajout de fonctionnalites tikzpicture
+%         Jean-Marc Nicod (logo + reglage pied de page)
+%         Robin Roche (2018 changements divers)
+%-------------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemefemto}[2012/06/05 beamer theme femto package]
+
+
+%-------------------------------------------------------------------------------
+% GENERAL SETTINGS
+%-------------------------------------------------------------------------------
+
+\setbeamertemplate{navigation symbols}{}
+\usetheme{default}
+\graphicspath{{./figures/}}	
+
+
+%-------------------------------------------------------------------------------
+% PACKAGES
+%-------------------------------------------------------------------------------
+
+\RequirePackage[latin1]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[english]{babel}
+\RequirePackage{etoolbox}
+
+\RequirePackage{amsfonts,amsmath,amssymb,stmaryrd}
+\RequirePackage{siunitx}
+\RequirePackage{eurosym}
+\RequirePackage{url}
+\RequirePackage{listings}
+\RequirePackage{lipsum}
+\usepackage{chemformula}
+\usepackage{multirow}
+
+\RequirePackage{times}
+\RequirePackage{tikz}
+\RequirePackage[absolute,overlay]{textpos} 
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=newest}
+\RequirePackage{graphicx}
+
+
+%-------------------------------------------------------------------------------
+% SLIDES SIZE
+%-------------------------------------------------------------------------------
+
+\setbeamersize{text margin left=5mm,text margin right=5mm} 
+
+
+%-------------------------------------------------------------------------------
+% COLORS
+%-------------------------------------------------------------------------------
+
+% Define colors
+\definecolor{DarkGray}{cmyk}{0,0,0,0.80}
+\definecolor{BleuFemtoTitre}{cmyk}{0.94,0.83,0,0.01}
+\definecolor{BleuFemtoTexte}{cmyk}{0.92,0.54,0.05,0.09}
+\definecolor{BleuFemto}{RGB}{39,84,148}
+\definecolor{BleuClairFemto}{RGB}{66,153,214}
+\definecolor{VertFemto}{RGB}{175,203,81}
+\definecolor{GrisClairFemto}{RGB}{177,179,180}
+\definecolor{GrisFemto}{RGB}{112,127,135}
+\definecolor{fondFemtotableau}{rgb}{1,0.71,0.754}
+
+
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+% Font sizes
+\setbeamerfont{title}{size=\Huge}
+\setbeamerfont{subtitle}{size=\small}
+\setbeamerfont{author}{size=\footnotesize}
+\setbeamerfont{institute}{size=\footnotesize}
+\setbeamerfont{date}{size=\footnotesize}
+
+% Page contents
+\setbeamertemplate{title page}
+{
+	% Title
+	\vskip 15mm 
+	\hspace*{1mm}
+	\usebeamerfont{title}\textcolor{BleuFemto}{\bfseries\inserttitle}\par
+	
+	% Subtitle
+	\vspace{0.4em}
+	\hspace*{1mm}
+	\usebeamerfont{subtitle}\textcolor{BleuFemto}\insertsubtitle
+	
+	% Author
+	\vspace{2.5em}
+	\hspace*{2mm}
+	\usebeamerfont{author}\textcolor{GrisFemto}\insertauthor
+	
+	% Institution
+	\vspace{1.0em}
+	\hspace*{2mm}
+	\usebeamerfont{institute}\textcolor{GrisFemto}\insertinstitute
+	
+	% Date
+	\vspace{0.4em}
+	\hspace*{2mm}
+	\usebeamerfont{date}\textcolor{GrisFemto}\insertdate
+}
+
+% Background command
+% Usage in document: \setbeamertemplate{background}{\titrefemto}
+\newcommand{\titrefemto}{
+\begin{tikzpicture}
+	% Definition of central node
+	\node[minimum height=\paperheight, minimum width=\paperwidth](centre) {};
+	
+	% Logos (bottom left)
+	\matrix[above=9mm, right=7mm, ampersand replacement=\&, column sep=5\pgflinewidth] at (centre.south west){
+		\node[anchor=center]{\includegraphics[width=7mm]{logo_UFC}}; \&
+		\node[anchor=center]{\includegraphics[width=6mm]{logo_CNRS}}; \&
+		\node[anchor=center]{\includegraphics[width=13mm]{logo_ENSMM}}; \&
+		\node[anchor=center]{\includegraphics[width=13mm]{logo_UTBM}}; \\
+	};
+	\node[above=9mm, right=60mm] at (centre.south west){|};
+	\node[above=9mm, right=65mm] at (centre.south west){\includegraphics[width=13mm]{logo_UBFC}};
+	\node[above=9mm, right=83mm] at (centre.south west){|};
+	\node[above=9mm, right=88.5mm] at (centre.south west){\includegraphics[width=13mm]{logo_FCLAB}};
+	
+	% Image (top right)
+	\node[below left, inner sep=0] at (centre.north east) {\includegraphics[width=5.5cm]{FEMTO_fond_hexagones}};
+	
+	% Institute logo (top left)
+	\node[below right=6mm] at (centre.north west) {\includegraphics[width=2.8cm]{logo_FEMTO-ST}};
+\end{tikzpicture}
+}
+
+
+%-------------------------------------------------------------------------------
+% NORMAL PAGE
+%-------------------------------------------------------------------------------
+
+% Text
+\setbeamerfont{normal text}{size=\tiny}
+\setbeamercolor{normal text}{fg=DarkGray,bg=white}
+
+% Frame title
+\setbeamertemplate{frametitle}{
+	\vspace{4mm} 
+	%\hspace{-5mm} 	
+	\Large\bf\textcolor{BleuFemto}\insertframetitle
+	\vspace*{0.4cm}
+}
+
+% Numbering of slides with alloframebreaks option
+\setbeamertemplate{frametitle continuation}{(\insertcontinuationcount)}
+\setbeamercolor{frametitle continuation}{fg=BleuFemto,bg=white}
+
+% Headline
+\addtobeamertemplate{headline}{}{\vskip-1.8pt}
+
+% Page footer
+\setbeamertemplate{footline}{
+	\leavevmode
+	\vspace{-2mm}
+	\hbox{
+		\begin{beamercolorbox}[wd=\paperwidth,right,ht=2.5ex,dp=1.8ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}
+    		\usebeamerfont{title in head/foot} \hfill \textcolor{DarkGray}{\insertframenumber\ / 		\inserttotalframenumber}\hspace{0.25cm}
+		\end{beamercolorbox}
+	}
+	\vskip 10pt
+}
+
+% Figure and table captions
+\usepackage{caption}
+\captionsetup{skip=4pt,belowskip=2pt}
+\setbeamerfont{caption}{size=\tiny}
+\setbeamerfont{caption name}{size=\tiny}
+%\setlength\abovecaptionskip{-4pt}
+
+% Tabular spacing
+\renewcommand*{\arraystretch}{1.3}
+
+% Lists
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamerfont{itemize/enumerate body}{size=\small}
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\footnotesize}
+
+% Blocks
+\setbeamertemplate{blocks}[rounded=false]
+\setbeamerfont{block title}{size=\small,series=\bfseries}
+\setbeamerfont{block body}{size=\small}
+\setbeamercolor{block title}{fg=white, bg=BleuFemto}
+\setbeamercolor{block body}{bg=GrisClairFemto!40,fg=GrisFemto!50!black}
+\newenvironment{femtoBlock}[1]{
+	\textcolor{BleuFemto}{\normalsize\textbf{#1}} 
+	\normalsize}
+
+% Footnote
+\renewcommand\footnoterule{
+	{\kern -3pt
+	\color{BleuFemto}\hrule width 2in
+	\kern 2.6pt}
+}
+\addtobeamertemplate{footnote}{}{\vspace{2.5ex}}
+
+% Bibliography
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+% Background command
+% Usage in document: \setbeamertemplate{background}{\pagefemto}
+\newcommand{\pagefemto}{
+\begin{tikzpicture}
+	% Definition of central node
+	\node[minimum height=\paperheight, minimum width=\paperwidth](centre) {};
+	
+	% Logo (bottom left)
+	\node[above right=0.75mm] at ([shift={(0.25,0)}]centre.south west) {\includegraphics[width=1.2cm]{logo_FEMTO-ST}};
+
+	% Image (top right)
+	\node[below left, inner sep=0, opacity=0.5](hexa) at (centre.north east) {\includegraphics[width=3.9cm]{FEMTO_fond_hexagones}};
+	
+	% Top horizontal line
+	\coordinate (A) at ([shift={(0.5,-1.15)}]centre.north west);
+	\coordinate (B) at (A-| hexa.west);
+	\draw[GrisClairFemto] (A) -- ([xshift=-3mm]B);	
+\end{tikzpicture}
+}
+
+
+%-------------------------------------------------------------------------------
+% (ALMOST) EMPTY PAGE
+%-------------------------------------------------------------------------------
+
+% Background command
+% Usage in document: \setbeamertemplate{background}{\videfemto}
+\newcommand{\videfemto}{
+\begin{tikzpicture}
+	% Definition of central node
+	\node[minimum height=\paperheight, minimum width=\paperwidth](centre) {};
+	
+	% Bottom horizontal line
+	\coordinate (A3) at ([shift={(5.5,2.7)}]centre.south west);
+	\coordinate (B3) at ([shift={(-5.5,2.7)}]centre.south east);
+	\draw[GrisClairFemto] (A3) -- (B3);
+	
+	% Logo (center)
+	\node[above] at ([shift={(0,-4)}]centre) {\includegraphics[width=3cm]{logo_FEMTO-ST}};
+	
+	% Image (top right)
+	\node[below left, inner sep=0](hexa) at (centre.north east) {\includegraphics[width=3.9cm]{FEMTO_fond_hexagones}};
+
+\end{tikzpicture}
+}
+
+
+%-------------------------------------------------------------------------------
+% TABLE OF CONTENTS (TOC)
+%-------------------------------------------------------------------------------
+
+% Spacing in TOC
+\setbeamertemplate{section in toc}{
+	\hspace*{1em}\inserttocsectionnumber.~~\inserttocsection
+}
+
+\setbeamertemplate{subsection in toc}{
+	\vspace*{0.7em}\hspace*{2em}--~~\inserttocsubsection \par
+}
+
+\setbeamertemplate{subsubsection in toc}{}
+
+% Text color
+\setbeamercolor{subsection title}{fg=DarkGray, bg=white}
+\setbeamercolor{subsection in toc}{fg=DarkGray, bg=white}
+
+% Section page
+\setbeamertemplate{section page}{
+  \frametitle{Outline}
+  \tableofcontents[currentsection,subsectionstyle=hide]
+}  
+
+% Subsection page
+\setbeamertemplate{subsection page}{
+  \frametitle{Outline}
+  \tableofcontents[currentsection,currentsubsection,
+  sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+}  
+
+% Vertical spacing
+\makeatletter
+\patchcmd{\beamer@sectionintoc}{\vskip1.5em}{\vskip1em}{}{}
+\makeatother
+
+% Section page
+\AtBeginSection{
+  \begingroup
+  \setbeamercolor{background canvas}{bg=white}
+  \frame{\sectionpage}
+  \endgroup
+}
+
+% Subsection page
+\AtBeginSubsection{
+  \begingroup
+  \setbeamercolor{background canvas}{bg=white}
+  \frame{\subsectionpage}
+  \endgroup
+}
+
+% Numbering of section slides
+\newcounter{sectionpage}
+\makeatletter
+\long\def\beamer@section[#1]#2{%
+  \beamer@savemode%
+  \mode<all>%
+  \ifbeamer@inlecture
+    \refstepcounter{section}%
+    \beamer@ifempty{#2}%
+    {\long\def\secname{#1}\long\def\lastsection{#1}}%
+    {\global\advance\beamer@tocsectionnumber by 1\relax%
+      \long\def\secname{#2}%
+      \long\def\lastsection{#1}%
+    \setcounter{sectionpage}{\insertframenumber}\stepcounter{sectionpage}%
+      \addtocontents{toc}{\protect\beamer@sectionintoc{\the\c@section}{#2\hfill\thesectionpage}{\the\c@page}{\the\c@part}%
+        {\the\beamer@tocsectionnumber}}}%
+    {\let\\=\relax\xdef\sectionlink{{Navigation\the\c@page}{\noexpand\secname}}}%
+    \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+    \beamer@ifempty{#1}{}{%
+      \addtocontents{nav}{\protect\headcommand{\protect\sectionentry{\the\c@section}{#1}{\the\c@page}{\secname}{\the\c@part}}}%
+      \addtocontents{nav}{\protect\headcommand{\protect\beamer@sectionpages{\the\beamer@sectionstartpage}{\the\beamer@tempcount}}}%
+      \addtocontents{nav}{\protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}}%
+    }%
+    \beamer@sectionstartpage=\c@page%
+    \beamer@subsectionstartpage=\c@page%
+    \def\insertsection{\expandafter\hyperlink\sectionlink}%
+    \def\insertsubsection{}%
+    \def\insertsubsubsection{}%
+    \def\insertsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
+    \def\insertsubsectionhead{}%
+    \def\insertsubsubsectionhead{}%
+    \def\lastsubsection{}%
+    \Hy@writebookmark{\the\c@section}{\secname}{Outline\the\c@part.\the\c@section}{2}{toc}%
+    \hyper@anchorstart{Outline\the\c@part.\the\c@section}\hyper@anchorend%
+    \beamer@ifempty{#2}{\beamer@atbeginsections}{\beamer@atbeginsection}%
+  \fi%
+  \beamer@resumemode}%
+  
+\def\beamer@subsection[#1]#2{%
+  \beamer@savemode%
+  \mode<all>%
+  \ifbeamer@inlecture%
+    \refstepcounter{subsection}%
+    \beamer@ifempty{#2}{\long\def\subsecname{#1}\long\def\lastsubsection{#1}}
+    {%
+      \long\def\subsecname{#2}%
+      \long\def\lastsubsection{#1}%
+    \setcounter{sectionpage}{\insertframenumber}\stepcounter{sectionpage}%
+      \addtocontents{toc}{\protect\beamer@subsectionintoc{\the\c@section}{\the\c@subsection}{#2\hfill\thesectionpage}{\the\c@page}{\the\c@part}{\the\beamer@tocsectionnumber}}%
+    }%
+    \beamer@tempcount=\c@page\advance\beamer@tempcount by -1%
+    \addtocontents{nav}{%
+      \protect\headcommand{\protect\beamer@subsectionentry{\the\c@part}{\the\c@section}{\the\c@subsection}{\the\c@page}{\lastsubsection}}%
+      \protect\headcommand{\protect\beamer@subsectionpages{\the\beamer@subsectionstartpage}{\the\beamer@tempcount}}%
+    }%
+    \beamer@subsectionstartpage=\c@page%
+    \edef\subsectionlink{{Navigation\the\c@page}{\noexpand\subsecname}}%
+    \def\insertsubsection{\expandafter\hyperlink\subsectionlink}%
+    \def\insertsubsubsection{}%
+    \def\insertsubsectionhead{\hyperlink{Navigation\the\c@page}{#1}}%
+    \def\insertsubsubsectionhead{}%
+    \Hy@writebookmark{\the\c@subsection}{#2}{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}{3}{toc}%
+    \hyper@anchorstart{Outline\the\c@part.\the\c@section.\the\c@subsection.\the\c@page}\hyper@anchorend%
+    \beamer@ifempty{#2}{\beamer@atbeginsubsections}{\beamer@atbeginsubsection}%
+  \fi%
+  \beamer@resumemode}
+  
+\makeatother
+
+
+%-------------------------------------------------------------------------------
+% APPENDIX PAGE
+%-------------------------------------------------------------------------------
+
+% Background command
+% Usage in document: \setbeamertemplate{background}{\appendixfemto}
+\newcommand{\appendixfemto}{
+\begin{tikzpicture}
+	% Definition of central node
+	\node[minimum height=\paperheight, minimum width=\paperwidth](centre) {};
+	
+	% Bottom horizontal line
+	%\coordinate (A3) at ([shift={(5.5,2.7)}]centre.south west);
+	%\coordinate (B3) at ([shift={(-5.5,2.7)}]centre.south east);
+	%\draw[GrisClairFemto] (A3) -- (B3);
+	
+	% Logo (center)
+	%\node[above] at ([shift={(0,-4)}]centre) {\includegraphics[width=3cm]{logo_FEMTO-ST}};
+	
+	% Image (top right)
+	\node[below left, inner sep=0](hexa) at (centre.north east) {\includegraphics[width=3.9cm]{FEMTO_fond_hexagones}};
+
+\end{tikzpicture}
+}
+
+
+%-------------------------------------------------------------------------------
+% MISC
+%-------------------------------------------------------------------------------
+
+% Color of many different text elements
+\setbeamercolor{structure}{fg=DarkGray}
+

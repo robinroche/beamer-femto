@@ -1,0 +1,208 @@
+\pdfminorversion=4
+\documentclass[9pt,handout]{beamer} % ,handout
+\usepackage{beamerthemefemto}
+
+
+%% TITLE PAGE INFORMATION
+\title{Relatively short title}
+\subtitle{Subtitle giving more details}
+\author{Dr. Robin Roche \texorpdfstring{-- \url{robin.roche@femto-st.fr}}{}}
+\institute{FEMTO-ST, FCLAB, CNRS, Univ. Bourgogne Franche-Comte, UTBM}
+\date{Event name -- Location, date}
+
+
+% ------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------
+
+% Set title page background
+\setbeamertemplate{background}{\titrefemto}
+
+% Display title page with contents
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+ 
+% Set normal page background
+\setbeamertemplate{background}{\pagefemto}
+
+% ------------------------------------------------------------
+
+% Display table of contents
+\begin{frame}{Outline}
+	\tableofcontents[pausesections,subsectionstyle=hide]
+\end{frame}
+
+% ------------------------------------------------------------
+
+\begin{frame}{Introduction}
+
+\lipsum[1-2]
+
+\end{frame}
+
+% -----------
+
+\section{First section}
+
+% -----------
+
+\subsection{A subsection title}
+
+% -----------
+
+\begin{frame}{A frame title}
+
+A list of something:
+\begin{itemize}
+\item Option A
+\item Option B\footnote{Here is an example footnote}
+\item Option C
+\end{itemize}
+
+\vspace*{1em}
+\begin{figure}[hbtp]
+\centering
+\includegraphics[height=10em]{figures/logo_FEMTO-ST.pdf}
+\caption{Example of figure caption}
+\end{figure}
+
+\end{frame}
+
+% -----------
+
+\subsection{Another subsection title}
+
+% -----------
+
+\begin{frame}{Another frame title}
+
+Another list of something:
+\begin{itemize}
+\item Option D, with references \cite{celik-rser,iet-book}
+\item Option E
+\item Option F
+\end{itemize}
+
+\vspace*{1em}
+\begin{table}
+\centering
+\caption{Table of greek letters}
+\begin{tabular}{|l|c|}
+\hline 
+\textbf{Letter} & \textbf{Symbol}\\
+\hline 
+Alpha & $\alpha$ \\ 
+Beta & $\beta$ \\ 
+Gamma & $\gamma$ \\ 
+\hline 
+\end{tabular} 
+\end{table}
+
+\end{frame}
+
+
+% -----------
+
+\section{Conclusion}
+
+% -----------
+
+\begin{frame}{Conclusion}
+
+\lipsum[1-1]
+
+\end{frame}
+
+% -----------
+
+\begin{frame}[allowframebreaks]
+\frametitle{For further reading}
+
+\footnotesize
+
+\begin{thebibliography}{bib}
+
+\bibitem[1]{celik-rser}
+Berk Celik, Robin Roche, Siddharth Suryanarayanan, David Bouquain and Abdellatif Miraoui
+\newblock {\em Electric energy management in residential areas through coordination of multiple smart homes}.
+\newblock Renewable and Sustainable Energy Reviews, vol. 80, pp. 260--275, 2017.
+
+\bibitem[2]{iet-book}
+Siddharth Suryanarayanan, Robin Roche and Timothy M. Hansen
+\newblock {\em Cyber-Physical-Social Systems and Constructs in Electric Power Engineering}.
+\newblock The IET, ISBN: 978-1-84919-936-0, 2016.
+
+\end{thebibliography}
+\end{frame}
+
+% -----------
+
+% Switch background
+\setbeamertemplate{background}{\videfemto}
+
+% Thank you page
+\begin{frame}[plain]
+
+\begin{center}
+\Huge Thank you for your attention
+
+\vspace*{1em}
+\normalsize \url{robin.roche@femto-st.fr}
+
+\end{center}
+
+\end{frame}
+
+% -----------
+
+\appendix\addtocounter{part}{-1}
+
+% -----------
+
+% Switch background
+\setbeamertemplate{background}{\appendixfemto}
+
+% Thank you page
+\begin{frame}[plain]
+
+\vspace*{1.5em}
+\begin{center}
+\Huge Appendices
+\end{center}
+
+\end{frame}
+
+% Set normal page background
+\setbeamertemplate{background}{\pagefemto}
+
+% -----------
+
+\section{Appendix A}
+
+% -----------
+
+\begin{frame}{Appendix A contents}
+
+\lipsum[1-1]
+
+\end{frame}
+
+% -----------
+
+\section{Appendix B}
+
+% -----------
+
+\begin{frame}{Appendix B contents}
+
+\lipsum[1-1]
+
+\end{frame}
+
+% -----------
+
+\end{document}
+
