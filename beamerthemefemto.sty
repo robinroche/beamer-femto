@@ -24,26 +24,57 @@
 % PACKAGES
 %-------------------------------------------------------------------------------
 
+% Basics
 \RequirePackage[latin1]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[english]{babel}
 \RequirePackage{etoolbox}
 
+% Misc
+\RequirePackage{times}
+\RequirePackage{graphicx}
 \RequirePackage{amsfonts,amsmath,amssymb,stmaryrd}
 \RequirePackage{siunitx}
-\RequirePackage{eurosym}
+\RequirePackage{eurosym} % euro symbol
 \RequirePackage{url}
 \RequirePackage{listings}
 \RequirePackage{lipsum}
-\usepackage{chemformula}
-\usepackage{multirow}
+\RequirePackage{chemformula}
+\RequirePackage{multirow}
+\RequirePackage{xcolor}
+\RequirePackage{steinmetz} % phase notation
+\RequirePackage{gensymb} % degree symbol
 
-\RequirePackage{times}
+% Tabular columns with fixed width (L, C, R)
+\RequirePackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Code listings
+\RequirePackage{listings}
+\lstset{language=Matlab, basicstyle=\footnotesize, frame=none, numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, xleftmargin=2em}
+
+% Algorithms
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\algrenewcommand\alglinenumber[1]{{\sffamily\tiny#1}}
+\makeatletter
+\renewcommand{\ALG@beginalgorithmic}{\small}
+\makeatother
+
+% tikz and pgfplots
 \RequirePackage{tikz}
+\RequirePackage{pdfrender}
+\usetikzlibrary{shapes,arrows}
+\tikzstyle{block} = [draw, fill=BleuFemto!20, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=BleuFemto!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
 \RequirePackage[absolute,overlay]{textpos} 
 \RequirePackage{pgfplots}
 \pgfplotsset{compat=newest}
-\RequirePackage{graphicx}
 
 
 %-------------------------------------------------------------------------------
@@ -67,6 +98,7 @@
 \definecolor{GrisClairFemto}{RGB}{177,179,180}
 \definecolor{GrisFemto}{RGB}{112,127,135}
 \definecolor{fondFemtotableau}{rgb}{1,0.71,0.754}
+\definecolor{forestgreenweb}{rgb}{0.13, 0.55, 0.13}
 
 
 %-------------------------------------------------------------------------------
@@ -177,6 +209,7 @@
 \captionsetup{skip=4pt,belowskip=2pt}
 \setbeamerfont{caption}{size=\tiny}
 \setbeamerfont{caption name}{size=\tiny}
+\setbeamertemplate{caption}[numbered]
 %\setlength\abovecaptionskip{-4pt}
 
 % Tabular spacing
@@ -191,20 +224,26 @@
 
 % Blocks
 \setbeamertemplate{blocks}[rounded=false]
-\setbeamerfont{block title}{size=\small,series=\bfseries}
-\setbeamerfont{block body}{size=\small}
+
+\setbeamerfont{block title}{series=\bfseries}
 \setbeamercolor{block title}{fg=white, bg=BleuFemto}
 \setbeamercolor{block body}{bg=GrisClairFemto!40,fg=GrisFemto!50!black}
-\newenvironment{femtoBlock}[1]{
-	\textcolor{BleuFemto}{\normalsize\textbf{#1}} 
-	\normalsize}
+
+\newenvironment<>{redblock}[1]{%
+  \setbeamercolor{block title}{fg=white,bg=red}%
+  \begin{block}#2{#1}}{\end{block}}
+
+\newenvironment<>{greenblock}[1]{%
+  \setbeamercolor{block title}{fg=white,bg=forestgreenweb}%
+  \begin{block}#2{#1}}{\end{block}}
 
 % Footnote
-\renewcommand\footnoterule{
-	{\kern -3pt
-	\color{BleuFemto}\hrule width 2in
-	\kern 2.6pt}
-}
+%\renewcommand\footnoterule{
+%	{\kern -3pt
+%	\color{BleuFemto}\hrule width 2in
+%	\kern 2.6pt}
+%}
+\renewcommand{\footnoterule}{}
 \addtobeamertemplate{footnote}{}{\vspace{2.5ex}}
 
 % Bibliography
@@ -413,3 +452,5 @@
 % Color of many different text elements
 \setbeamercolor{structure}{fg=DarkGray}
 
+% URL font
+\urlstyle{same}

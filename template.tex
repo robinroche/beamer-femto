@@ -1,5 +1,8 @@
-\pdfminorversion=4
-\documentclass[9pt,handout]{beamer} % ,handout
+\pdfminorversion=4 % Required for compatibility
+\documentclass[9pt]{beamer}
+% Option of beamer class:
+% handout: for printing
+% aspectratio=169: for switching from 4:3 to 16:9 ratio
 \usepackage{beamerthemefemto}
 
 
@@ -55,18 +58,70 @@
 
 \begin{frame}{A frame title}
 
-A list of something:
+A list of something with sequential animations using overlays:
 \begin{itemize}
-\item Option A
-\item Option B\footnote{Here is an example footnote}
-\item Option C
+\item Option A with a cost of \EUR{10} and a voltage of 20.51\phase{10\degree} kV
+\item \visible<2->{Option B\footnote<2->{Here is an example footnote} with a footnote and a figure}
+\item \visible<3->{Option C with a chemical formula: \ch{2 H2 +  O2 -> 2 H2O}}
+\item \visible<4->{Option D with an equation:
+\begin{equation}
+X(s)=\int _{0}^{\infty }e^{-st}\,dt = \left[ \dfrac{e^{-st}}{-s} \right]_0^\infty = \dfrac{1}{s}
+\label{eq:example}
+\end{equation}
+}
 \end{itemize}
 
+\visible<2->{
 \vspace*{1em}
 \begin{figure}[hbtp]
 \centering
-\includegraphics[height=10em]{figures/logo_FEMTO-ST.pdf}
+\includegraphics[height=7em]{figures/logo_FEMTO-ST.pdf}
 \caption{Example of figure caption}
+\label{fig:example}
+\end{figure}
+}
+
+\end{frame}
+
+% -----------
+
+\begin{frame}{Another frame title}
+
+An example of tikz figure:
+\vspace*{1em}
+\begin{figure}
+\scalebox{0.9}{
+\begin{tikzpicture}[auto, node distance=1.5cm]
+	\node (input) {$V_{\mathrm{ref}}(s)$};
+    \node [sum, right of=input, node distance=1.5cm] (sum) {};
+    \node [block, right of=sum, node distance=2.5cm] (amplifier) {$\dfrac{K_A}{1+\tau_As}$};
+  	\node [below of=amplifier, node distance=0.85cm] (amplifier_txt) {Amplifier};
+    \node [block, right of=amplifier, node distance=2.5cm] (exciter) {$\dfrac{K_E}{1+\tau_Es}$};
+  	\node [below of=exciter, node distance=0.85cm] (exciter_txt) {Exciter};
+    \node [block, right of=exciter, node distance=2.5cm] (generator) {$\dfrac{K_G}{1+\tau_Gs}$};
+  	\node [below of=generator, node distance=0.85cm] (generator_txt) {Generator};
+    \node [right of=generator, node distance=2.5cm] (output) {$V_t(s)$};
+    
+    \draw [->] (input) -- (sum);
+    \draw [->] (sum) -- node [name=ve_txt] {\scriptsize $V_e$} (amplifier);
+    \draw [->] (amplifier) -- node [name=vr_txt] {\scriptsize $V_R$} (exciter);
+
+    \node [below of=ve_txt, node distance=1cm] (dummy) {}; 
+    \node [block, below of=vr_txt, node distance=2.1cm, draw=red] (stabilizer) {\textcolor{red}{$\dfrac{K_Fs}{1+\tau_Fs}$}};
+  	\node [below of=stabilizer, node distance=0.85cm] (stabilizer_txt) {\textcolor{red}{Stabilizer}};  
+    \node [block, below of=exciter, node distance=3.6cm] (sensor) {$\dfrac{K_R}{1+\tau_Rs}$};
+  	\node [below of=sensor, node distance=0.85cm] (sensor_txt) {Sensor};   
+
+    \draw [->] (exciter) -- node {\scriptsize $V_F$}  node [pos=0.5,name=ybis] {} (generator);
+    \draw [red,->] (ybis) |- (stabilizer);    
+    \draw [red,-] (dummy) |- node [pos=0.062,name=yter] {} (stabilizer); 
+    \draw [red,->] (yter) -- node[pos=0.65,below=0.085cm] {$-$} (sum);     
+    \draw [->] (generator) -- node [pos=0.5,name=y] {} (output);
+    \draw [->] (y) |- (sensor);
+    \draw [->] (sensor) -| node[pos=0.92] {$-$} (sum);    
+\end{tikzpicture}
+}
+\caption{A tikz block diagram example}
 \end{figure}
 
 \end{frame}
@@ -79,30 +134,115 @@ A list of something:
 
 \begin{frame}{Another frame title}
 
-Another list of something:
-\begin{itemize}
-\item Option D, with references \cite{celik-rser,iet-book}
-\item Option E
-\item Option F
-\end{itemize}
+Another list of something with a pause:
+\begin{enumerate}
+\item Option D citing references \cite{celik-rser,iet-book}
+\pause
+\item Option E with a reference to Fig.~\ref{fig:example} and Table~\ref{tab:example}
+\item Option F with a \hyperlink{appendixA}{link to another slide} or an \href{https://www.robinroche.com/}{external website}
+\item Option G with a ~\hyperlink{appendixA}{\beamergotobutton{button link}}
+\end{enumerate}
 
 \vspace*{1em}
 \begin{table}
 \centering
 \caption{Table of greek letters}
-\begin{tabular}{|l|c|}
+\begin{tabular}{|l|c|C{3cm}|}
 \hline 
-\textbf{Letter} & \textbf{Symbol}\\
+\multicolumn{2}{|c|}{\textbf{Letter and symbol}} & \textbf{Comment}\\
 \hline 
-Alpha & $\alpha$ \\ 
-Beta & $\beta$ \\ 
-Gamma & $\gamma$ \\ 
+Alpha & $\alpha$ & \multirow{2}{*}{Nothing}\\ 
+\cline{1-2}
+Beta & $\beta$ & \\ 
+\hline
+Gamma & $\gamma$ & Not much\\ 
 \hline 
 \end{tabular} 
+\label{tab:example}
 \end{table}
 
 \end{frame}
 
+% -----------
+
+\begin{frame}{One more frame title}
+
+\begin{block}{Block title}
+Lots of things you can say
+\end{block}
+
+\begin{redblock}{Block title}
+Important things you can say
+\end{redblock}
+
+\begin{greenblock}{Block title}
+Put an example here
+\end{greenblock} 
+
+\vspace*{1.5em}
+Another example with two columns:
+\vspace*{1em}
+\begin{columns}[c]
+\column{.48\textwidth}
+Contents of the first column with some text and stuff 
+\column{.48\textwidth}
+Contents of the second column with some text and stuff 
+\end{columns}
+
+\end{frame}
+
+% -----------
+
+\begin{frame}[fragile]{Another one again}
+
+Here is an example of Matlab code\footnote{Do not forget the [fragile] option in the frame definition}:
+\begin{algorithm}[H]
+\begin{lstlisting}[language=Matlab]
+% Variables
+ka = 10; ke = 1; kg = 1; kf = 2; kr = 1;
+tau_a = 0.1; tau_e = 0.4; tau_g = 1.0; tau_f = 0.04; tau_r = 0.05;
+
+% Transfer functions
+GA = tf([ka],[tau_a 1]);
+GE = tf([ke],[tau_e 1]);
+GG = tf([kg],[tau_g 1]);
+HF = tf([kf 0],[tau_f 1]);
+HR = tf([kr],[tau_r 1]);
+
+% Combine transfer functions
+T1 = series(GA,GE);
+T2 = feedback(T1,HF);
+T3 = series(T2,GG);
+T4 = feedback(T3,HR)
+\end{lstlisting}
+\caption{Example of code}
+\label{alg:code}
+\end{algorithm}
+
+\end{frame}
+
+% -----------
+
+\begin{frame}[fragile]{And a final one}
+
+Here is another algorithm with pseudocode:
+\begin{algorithm}[H]
+\begin{algorithmic}[1] % [1]: adds line number each line
+\vspace*{0.2em}
+\If {$i\geq maxval$}
+    \State $i\gets 0$
+\Else
+    \If {$i+k\leq maxval$}
+        \State $i\gets i+k$ \Comment{This is a comment}
+    \EndIf
+\EndIf
+\end{algorithmic}
+\caption{Example of algorithm pseudocode}
+\label{alg:algo}
+\end{algorithm}
+
+
+\end{frame}
 
 % -----------
 
@@ -185,6 +325,7 @@ Siddharth Suryanarayanan, Robin Roche and Timothy M. Hansen
 % -----------
 
 \begin{frame}{Appendix A contents}
+\label{appendixA}
 
 \lipsum[1-1]
 
